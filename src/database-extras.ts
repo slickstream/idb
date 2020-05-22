@@ -52,10 +52,11 @@ function getMethod(
   return method;
 }
 
-replaceTraps((oldTraps) => ({
-  ...oldTraps,
-  get: (target, prop, receiver) =>
-    getMethod(target, prop) || oldTraps.get!(target, prop, receiver),
-  has: (target, prop) =>
-    !!getMethod(target, prop) || oldTraps.has!(target, prop),
-}));
+replaceTraps((oldTraps) => {
+  const ret = Object.assign({}, oldTraps);
+  ret.get = (target, prop, receiver) =>
+    getMethod(target, prop) || oldTraps.get!(target, prop, receiver);
+  ret.has = (target, prop) =>
+    !!getMethod(target, prop) || oldTraps.has!(target, prop);
+  return ret;
+});

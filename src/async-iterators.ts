@@ -64,13 +64,14 @@ function isIteratorProp(target: any, prop: number | string | symbol) {
   );
 }
 
-replaceTraps((oldTraps) => ({
-  ...oldTraps,
-  get(target, prop, receiver) {
+replaceTraps((oldTraps) => {
+  const ret = Object.assign({}, oldTraps);
+  ret.get = (target, prop, receiver) => {
     if (isIteratorProp(target, prop)) return iterate;
     return oldTraps.get!(target, prop, receiver);
-  },
-  has(target, prop) {
+  };
+  ret.has = (target, prop) => {
     return isIteratorProp(target, prop) || oldTraps.has!(target, prop);
-  },
-}));
+  };
+  return ret;
+});
