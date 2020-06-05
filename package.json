@@ -1,5 +1,5 @@
 {
-  "name": "idb",
+  "name": "@slickstream/idb",
   "version": "5.0.3",
   "description": "A small wrapper that makes IndexedDB usable",
   "main": "build/cjs/index.js",
